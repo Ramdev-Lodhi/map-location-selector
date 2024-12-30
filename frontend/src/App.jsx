@@ -1,9 +1,15 @@
 import "./App.css";
+import { Header } from "./components/Layouts/Header";
+import { AuthProvider } from "./contexts/AuthContext";
+import HomePage from "./pages/HomePage";
 
 function App() {
   return (
     <>
-      <h1>Location</h1>
+      <AuthProvider>
+        <Header />
+        <HomePage />
+      </AuthProvider>
     </>
   );
 }
