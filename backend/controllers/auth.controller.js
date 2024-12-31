@@ -10,11 +10,11 @@ const signup = asyncHandler(async (req, res) => {
     if (user) {
       return res.status(400).json({ message: "User already exists" });
     }
-    user = new userModel({ name, email, password }); // Password hashing handled in pre-save middleware
+    user = new userModel({ name, email, password });
     await user.save();
     const payload = { userId: user.id };
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
-      expiresIn: "1h"
+      expiresIn: "1h",
     });
 
     res.status(201).json({
@@ -22,8 +22,8 @@ const signup = asyncHandler(async (req, res) => {
       user: {
         id: user.id,
         name: user.name,
-        email: user.email
-      }
+        email: user.email,
+      },
     });
   } catch (err) {
     console.error(err.message);
@@ -50,7 +50,7 @@ const signin = asyncHandler(async (req, res) => {
     }
     const payload = { userId: user.id };
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
-      expiresIn: "1h"
+      expiresIn: "1h",
     });
 
     res.status(200).json({
@@ -60,8 +60,8 @@ const signin = asyncHandler(async (req, res) => {
       user: {
         id: user.id,
         name: user.name,
-        email: user.email
-      }
+        email: user.email,
+      },
     });
   } catch (err) {
     console.error(err.message);
@@ -71,5 +71,5 @@ const signin = asyncHandler(async (req, res) => {
 
 module.exports = {
   signup,
-  signin
+  signin,
 };

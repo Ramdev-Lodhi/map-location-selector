@@ -11,6 +11,8 @@ const ensureAuthenticated = (req, res, next) => {
       return res.status(403).json({ message: "Token is not valid" });
     }
     req.user = decoded;
+    console.log(req.user);
+
     next();
   });
 };
