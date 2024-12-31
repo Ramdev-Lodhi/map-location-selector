@@ -100,7 +100,7 @@
 .app-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  /* height: 100vh; */
   margin: 0;
   padding: 0;
 }
@@ -146,4 +146,71 @@
   margin: 10px auto;
   display: block;
   z-index: 1000;
+}
+.address-form-container {
+  width: 600px;
+  margin: 10px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: white;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+
+.category-selection {
+  margin-top: 20px;
+}
+
+.category-options {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.category-options .addressformbtn {
+  color: black;
+  background-color: aliceblue;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.category-options .addressformbtn.selected {
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+.form-actions {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.addressformbtn {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.addressformbtn:hover {
+  background-color: #0056b3;
 }

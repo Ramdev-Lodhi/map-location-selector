@@ -4,17 +4,28 @@ import AuthForm from "../UI/AuthForm";
 import { signin, signup } from "../../services/Auth";
 
 const AuthModal = () => {
-  const { isLogin, switchToLogin, switchToSignup, toggleAuthModal } =
-    useContext(AuthContext);
+  const {
+    isLogin,
+    switchToLogin,
+    switchToSignup,
+    toggleAuthModal,
+    loginUser,
+    setIsAuthenticated
+  } = useContext(AuthContext);
 
   const handleSubmit = async (formData) => {
     try {
+      console.log(isLogin);
+      console.log(formData);
       const { data } = isLogin
         ? await signin(formData)
         : await signup(formData);
-
+      console.log(data);
       if (data.token) {
         localStorage.setItem("authToken", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        loginUser(data.user);
+        setIsAuthenticated(true);
         alert("Success! You are now logged in.");
         toggleAuthModal();
       } else {

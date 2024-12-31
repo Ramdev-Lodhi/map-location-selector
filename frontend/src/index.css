@@ -16,6 +16,7 @@
   --test: #070101;
   --para-color: #504e4d;
   --btn-hover-bg-color: #003b99;
+  background-color: #f9f6ee;
   --btn-box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   &::-webkit-scrollbar {
     display: none;

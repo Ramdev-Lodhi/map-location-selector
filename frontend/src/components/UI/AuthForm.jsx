@@ -6,7 +6,7 @@ const AuthForm = ({ isLogin, onSubmit }) => {
     name: "",
     email: "",
     password: "",
-    confirmPassword: "",
+    confirmPassword: ""
   });
 
   const handleChange = (e) => {
@@ -17,7 +17,7 @@ const AuthForm = ({ isLogin, onSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData); // Pass formData to the parent component
+    onSubmit(formData);
   };
 
   return (

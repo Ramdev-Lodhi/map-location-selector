@@ -1,25 +1,74 @@
-// import { useState } from "react";
+// import { useState, useEffect, useRef } from "react";
 // import {
 //   GoogleMap,
 //   LoadScript,
-//   Marker,
-//   StandaloneSearchBox,
+//   StandaloneSearchBox
 // } from "@react-google-maps/api";
+
+// const libraries = ["places"]; // Static declaration for libraries
 
 // const MapComponent = () => {
 //   const mapStyles = {
-//     height: "calc(100vh - 50px)",
-//     width: "100%",
+//     height: "calc(100vh - 200px)",
+//     width: "100%"
 //   };
 
 //   const defaultPosition = {
 //     lat: 22.7196,
-//     lng: 75.8577,
+//     lng: 75.8577
 //   };
 
 //   const [currentPosition, setCurrentPosition] = useState(defaultPosition);
 //   const [showModal, setShowModal] = useState(true);
 //   const [searchBox, setSearchBox] = useState(null);
+//   const mapRef = useRef(null); // Ref for the map
+
+//   // Initialize the map with AdvancedMarkerElement
+//   useEffect(() => {
+//     if (typeof window.google !== "undefined" && window.google.maps) {
+//       const { google } = window;
+
+//       // Check if AdvancedMarkerElement is available
+//       if (google.maps.marker && google.maps.marker.AdvancedMarkerElement) {
+//         console.log("AdvancedMarkerElement is available!");
+//       } else {
+//         console.warn(
+//           "AdvancedMarkerElement is not available. Using Marker as fallback."
+//         );
+//       }
+//     }
+//   }, []);
+
+//   // Initialize the map with marker
+//   useEffect(() => {
+//     if (mapRef.current && currentPosition && window.google) {
+//       const { google } = window;
+//       const map = mapRef.current;
+
+//       // Wait until the map is fully initialized
+//       if (!map) {
+//         console.error("Map not initialized");
+//         return;
+//       }
+
+//       // Use AdvancedMarkerElement if available, otherwise fall back to standard Marker
+//       const MarkerClass =
+//         google.maps.marker?.AdvancedMarkerElement || google.maps.Marker;
+
+//       // Create the marker
+//       const marker = new MarkerClass({
+//         position: currentPosition,
+//         map: map, // Ensure the marker is associated with the map
+//         title: "Current Location", // Example of a title
+//         icon: "<div style='background-color: #ff0000; width: 10px; height: 10px; border-radius: 50%;'></div>" // Custom marker content
+//       });
+
+//       // Clean up the marker when the component is unmounted or position changes
+//       return () => {
+//         marker.setMap(null);
+//       };
+//     }
+//   }, [currentPosition]);
 
 //   const locateUser = () => {
 //     if (navigator.geolocation) {
@@ -27,7 +76,7 @@
 //         (position) => {
 //           setCurrentPosition({
 //             lat: position.coords.latitude,
-//             lng: position.coords.longitude,
+//             lng: position.coords.longitude
 //           });
 //           setShowModal(false);
 //         },
@@ -44,7 +93,7 @@
 //   const handleMapClick = (event) => {
 //     setCurrentPosition({
 //       lat: event.latLng.lat(),
-//       lng: event.latLng.lng(),
+//       lng: event.latLng.lng()
 //     });
 //   };
 
@@ -55,9 +104,11 @@
 //         const location = places[0].geometry.location;
 //         setCurrentPosition({
 //           lat: location.lat(),
-//           lng: location.lng(),
+//           lng: location.lng()
 //         });
-//         setShowModal(false); // Close modal when a place is selected
+//         setShowModal(false);
+//       } else {
+//         alert("No places found. Please refine your search.");
 //       }
 //     }
 //   };
@@ -67,17 +118,19 @@
 //   };
 
 //   return (
-//     <div style={appStyle}>
+//     <div className="app-container">
 //       {/* Modal */}
 //       {showModal && (
-//         <div style={modalStyle}>
-//           <div style={modalContentStyle}>
-//             <h3>Location Permission</h3>
-//             <p>We need your location to update your delivery address.</p>
-//             <button onClick={locateUser} style={buttonStyle}>
+//         <div className="modal" role="dialog" aria-modal="true">
+//           <div className="modal-content">
+//             <h3 id="modal-title">Location Permission</h3>
+//             <p id="modal-description">
+//               We need your location to update your delivery address.
+//             </p>
+//             <button className="button" onClick={locateUser}>
 //               Enable Location
 //             </button>
-//             <button onClick={closeModal} style={buttonStyle}>
+//             <button className="button" onClick={closeModal}>
 //               Search Manually
 //             </button>
 //           </div>
@@ -87,7 +140,8 @@
 //       {/* Google Map */}
 //       <LoadScript
 //         googleMapsApiKey="AIzaSyAFrB_FyCr2o0o7T9cVIkI6NMdedk8NbXY"
-//         libraries={["places"]}
+//         libraries={libraries}
+//         version="quarterly" // Ensure you're using the latest available API version
 //       >
 //         <StandaloneSearchBox
 //           onLoad={(ref) => setSearchBox(ref)}
@@ -96,99 +150,42 @@
 //           <input
 //             type="text"
 //             placeholder="Search your address"
-//             style={inputStyle}
+//             className="search-input"
 //           />
 //         </StandaloneSearchBox>
 //         <GoogleMap
+//           ref={mapRef}
 //           mapContainerStyle={mapStyles}
 //           zoom={13}
 //           center={currentPosition}
 //           onClick={handleMapClick}
-//         >
-//           <Marker
-//             position={currentPosition}
-//             icon={{
-//               url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
-//             }}
-//           />
-//         </GoogleMap>
+//         />
 //       </LoadScript>
 //     </div>
 //   );
 // };
 
-// // App container style
-// const appStyle = {
-//   display: "flex",
-//   flexDirection: "column",
-//   height: "100vh",
-//   margin: 0,
-//   padding: 0,
-// };
-
-// // Modal styles
-// const modalStyle = {
-//   position: "fixed",
-//   top: 0,
-//   left: 0,
-//   width: "100%",
-//   height: "100%",
-//   backgroundColor: "rgba(0, 0, 0, 0.5)",
-//   display: "flex",
-//   justifyContent: "center",
-//   alignItems: "center",
-//   zIndex: 1000, // Ensure modal appears above the map
-// };
-
-// const modalContentStyle = {
-//   backgroundColor: "white",
-//   padding: "20px",
-//   borderRadius: "10px",
-//   textAlign: "center",
-//   width: "300px",
-// };
-
-// const buttonStyle = {
-//   margin: "10px",
-//   padding: "10px 20px",
-//   border: "none",
-//   borderRadius: "5px",
-//   cursor: "pointer",
-//   backgroundColor: "#007BFF",
-//   color: "white",
-// };
-
-// // Input field style
-// const inputStyle = {
-//   boxSizing: "border-box",
-//   border: "1px solid #ccc",
-//   borderRadius: "5px",
-//   width: "90%",
-//   padding: "10px",
-//   margin: "10px auto",
-//   zIndex: 1000,
-//   display: "block",
-// };
+// export default MapComponent;
 
 // export default MapComponent;
 import { useState } from "react";
 import {
   GoogleMap,
   LoadScript,
-  StandaloneSearchBox,
+  StandaloneSearchBox
 } from "@react-google-maps/api";
 
 const libraries = ["places"]; // Static declaration for libraries
 
 const MapComponent = () => {
   const mapStyles = {
-    height: "calc(100vh - 50px)",
-    width: "100%",
+    height: "calc(100vh - 200px)",
+    width: "100%"
   };
 
   const defaultPosition = {
     lat: 22.7196,
-    lng: 75.8577,
+    lng: 75.8577
   };
 
   const [currentPosition, setCurrentPosition] = useState(defaultPosition);
@@ -201,7 +198,7 @@ const MapComponent = () => {
         (position) => {
           setCurrentPosition({
             lat: position.coords.latitude,
-            lng: position.coords.longitude,
+            lng: position.coords.longitude
           });
           setShowModal(false);
         },
@@ -218,7 +215,7 @@ const MapComponent = () => {
   const handleMapClick = (event) => {
     setCurrentPosition({
       lat: event.latLng.lat(),
-      lng: event.latLng.lng(),
+      lng: event.latLng.lng()
     });
   };
 
@@ -229,7 +226,7 @@ const MapComponent = () => {
         const location = places[0].geometry.location;
         setCurrentPosition({
           lat: location.lat(),
-          lng: location.lng(),
+          lng: location.lng()
         });
         setShowModal(false);
       } else {
