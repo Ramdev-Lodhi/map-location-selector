@@ -10,7 +10,7 @@ const AuthModal = () => {
     switchToSignup,
     toggleAuthModal,
     loginUser,
-    setIsAuthenticated
+    setIsAuthenticated,
   } = useContext(AuthContext);
 
   const handleSubmit = async (formData) => {
@@ -20,7 +20,6 @@ const AuthModal = () => {
       const { data } = isLogin
         ? await signin(formData)
         : await signup(formData);
-      console.log(data);
       if (data.token) {
         localStorage.setItem("authToken", data.token);
         localStorage.setItem("user", JSON.stringify(data.user));

@@ -148,7 +148,7 @@
   z-index: 1000;
 }
 .address-form-container {
-  width: 600px;
+  width: 50%;
   margin: 10px auto;
   padding: 20px;
   border: 1px solid #ccc;
@@ -213,4 +213,148 @@ input {
 
 .addressformbtn:hover {
   background-color: #0056b3;
+}
+.address-section {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 20px;
+}
+.address-manager-container {
+  padding: 20px;
+  width: 50%;
+  background-color: white;
+  margin: 10px auto;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+@media (max-width: 768px) {
+  .address-section {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .address-form-container,
+  .address-manager-container {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+.search-box {
+  margin-bottom: 20px;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.content-address {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.address-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 10px 0;
+  background-color: #f9f9f9;
+}
+
+.address-details {
+  flex: 2;
+}
+
+.address-details h3 {
+  margin: 0;
+  text-align: left;
+  font-size: 18px;
+  color: #333;
+}
+
+.address-details p {
+  margin: 5px 0 0;
+  color: #555;
+}
+
+.address-actions {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+.address-actions button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.address-actions button:hover {
+  opacity: 0.9;
+}
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: red;
+}
+
+.selected-address {
+  margin-top: 30px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.selected-address h3 {
+  margin-bottom: 15px;
+}
+
+.selected-address p {
+  font-size: 16px;
 }

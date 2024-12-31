@@ -1,40 +1,53 @@
-import { useState } from "react";
-
-// You can replace these with your own icons or import from a library like FontAwesome
+import { useState, useContext } from "react";
 import { FaHome, FaBriefcase, FaUsers } from "react-icons/fa";
+import { AddressContext } from "../../contexts/AddressContext";
+import { addressInsert } from "../../services/Address";
 
 const AddressForm = () => {
+  const { setAddresses } = useContext(AddressContext);
   const [addressDetails, setAddressDetails] = useState({
     houseNo: "",
     area: "",
-    category: "Home"
+    category: "Home",
   });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setAddressDetails({
       ...addressDetails,
-      [name]: value
+      [name]: value,
     });
   };
 
   const handleCategoryChange = (category) => {
     setAddressDetails({
       ...addressDetails,
-      category
+      category,
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Address Details Submitted:", addressDetails);
+    try {
+      const { status, data } = await addressInsert(addressDetails);
+      console.log(status);
+
+      if (status === 201) {
+        setAddresses((prevAddresses) => [...prevAddresses, data]);
+        alert("Address added successfully!");
+      }
+    } catch (error) {
+      console.error("Error adding address:", error);
+      alert("Failed to add address");
+    }
   };
 
   return (
     <div className="address-form-container">
       <h2>Delivery Address Form</h2>
       <hr />
-      <br></br>
+      <br />
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="houseNo">House/Flat/Block No.</label>
@@ -63,7 +76,6 @@ const AddressForm = () => {
         </div>
 
         <div className="category-selection">
-          <h3>Select Category</h3>
           <div className="category-options">
             <button
               type="button"
